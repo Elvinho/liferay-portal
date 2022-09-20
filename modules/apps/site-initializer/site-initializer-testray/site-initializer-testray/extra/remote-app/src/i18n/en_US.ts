@@ -192,6 +192,7 @@ export default {
 	'minimum-x-characters': 'Minimum {0} characters.',
 	'modified-date': 'Modified Date',
 	'name': 'Name',
+	'name-is-a-required-field': 'Name is a required field.',
 	'new-build': 'New Build',
 	'new-case': 'New Case',
 	'new-case-type': 'New Case Type',

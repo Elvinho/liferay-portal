@@ -186,7 +186,7 @@ const yupSchema = {
 		build: yup.number().required(),
 		caseTypes: yup.array(yup.number()).required(),
 		dueStatus: yup.number(),
-		name: yup.string(),
+		name: yup.string().required(i18n.translate('name-is-a-required-field')),
 		project: yup.number(),
 		routine: yup.number(),
 		userToTasks: yup.array().of(yup.number()),
