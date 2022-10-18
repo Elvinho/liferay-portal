@@ -164,6 +164,7 @@ export default function TopperItemActions({item}) {
 				onActiveChange={setActive}
 				trigger={
 					<ClayButton
+						aria-description="To expand press enter and navigate with arrow keys"
 						displayType="unstyled"
 						small
 						title={Liferay.Language.get('options')}
