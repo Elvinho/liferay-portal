@@ -423,6 +423,7 @@ export const getMessagesQuery = `
 				encodingFormat
 				friendlyUrlPath
 				hasCompanyMx
+				hasModified
 				id
 				messageBoardMessages(flatten: true, sort: "dateCreated:asc") {
 					items {
@@ -809,6 +810,7 @@ export const getUserActivityQuery = `
 					postsNumber
 					rank
 				}
+				hasModified
 				dateModified
 				friendlyUrlPath
 				headline
