@@ -810,9 +810,9 @@ export const getUserActivityQuery = `
 					postsNumber
 					rank
 				}
-				hasModified
 				dateModified
 				friendlyUrlPath
+				hasModified
 				headline
 				id
 				keywords

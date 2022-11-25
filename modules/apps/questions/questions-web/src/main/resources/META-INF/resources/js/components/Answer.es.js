@@ -115,9 +115,11 @@ export default withRouter(
 								/>
 							</span>
 
-							{answer.hasModified ? (
-								<span>({Liferay.Language.get('edited')})</span>
-							) : null}
+							{answer.hasModified && (
+								<span className="question-edited">
+									{' - '}({Liferay.Language.get('edited')})
+								</span>
+							)}
 
 							{answer.status && answer.status !== 'approved' && (
 								<span className="c-ml-2 text-secondary">

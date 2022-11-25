@@ -379,3 +379,8 @@ div {
 	border: 1px solid $primary-l1;
 	border-radius: 0.25rem;
 }
+
+.question-edited {
+	font-style: italic;
+	color: var(--secondary);
+}
