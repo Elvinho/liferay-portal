@@ -205,7 +205,8 @@ export default withRouter(
 																			);
 																		}
 																	);
-																} else {
+																}
+																else {
 																	deleteAnswer(
 																		answer
 																	);
