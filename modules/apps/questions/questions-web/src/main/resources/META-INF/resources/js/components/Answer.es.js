@@ -115,6 +115,12 @@ export default withRouter(
 								/>
 							</span>
 
+							{answer.modified && (
+								<span className="question-edited">
+									{' - '}({Liferay.Language.get('edited')})
+								</span>
+							)}
+
 							{answer.status && answer.status !== 'approved' && (
 								<span className="c-ml-2 text-secondary">
 									<ClayLabel displayType="info">
@@ -199,8 +205,7 @@ export default withRouter(
 																			);
 																		}
 																	);
-																}
-																else {
+																} else {
 																	deleteAnswer(
 																		answer
 																	);
