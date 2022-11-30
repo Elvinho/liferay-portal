@@ -449,3 +449,8 @@ div {
 	text-overflow: ellipsis;
 	white-space: nowrap;
 }
+
+.question-edited {
+	font-style: italic;
+	color: var(--secondary);
+}

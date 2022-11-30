@@ -424,6 +424,7 @@ export const getMessagesQuery = `
 				friendlyUrlPath
 				hasCompanyMx
 				id
+				isModified
 				messageBoardMessages(flatten: true, sort: "dateCreated:asc") {
 					items {
 						actions
@@ -713,6 +714,7 @@ export const getRelatedThreadsQuery = `
 				friendlyUrlPath
 				headline
 				id
+				isModified
 				locked
 				messageBoardSection {
 					numberOfMessageBoardSections
@@ -814,6 +816,7 @@ export const getUserActivityQuery = `
 				friendlyUrlPath
 				headline
 				id
+				isModified
 				keywords
 				messageBoardThread {
 					messageBoardSection {
