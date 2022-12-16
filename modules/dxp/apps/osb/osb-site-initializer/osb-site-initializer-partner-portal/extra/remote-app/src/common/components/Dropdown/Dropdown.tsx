@@ -13,6 +13,10 @@ import ClayButton from '@clayui/button';
 import ClayDropDown from '@clayui/drop-down';
 import ClayIcon from '@clayui/icon';
 
+import useLiferayNavigate from '../../../common/hooks/useLiferayNavigate';
+import {Liferay} from '../../../common/services/liferay';
+import {PRMPageRoute} from '../../enums/prmPageRoute';
+
 interface DropdownOption {
 	icon: string;
 	key: string;
@@ -24,26 +28,42 @@ interface Props {
 	options: DropdownOption[];
 }
 
-const DropDown = ({onClick, options}: Props) => (
-	<ClayDropDown
-		trigger={
-			<ClayButton displayType="unstyled">
-				<ClayIcon symbol="ellipsis-v"></ClayIcon>
-			</ClayButton>
-		}
-	>
-		<ClayDropDown.ItemList>
-			<ClayDropDown.Group>
-				{options.map((item, index) => (
-					<ClayDropDown.Item key={index} onClick={onClick}>
-						<ClayIcon symbol={item.icon}></ClayIcon>
+const DropDown = ({onClick, options}: Props) => {
+	const siteURL = useLiferayNavigate();
+	const onEdit = () => {
+		options.map((item) =>
+			item.key === 'edit'
+				? Liferay.Util.navigate(
+						`${siteURL}/${PRMPageRoute.EDIT_MDF_REQUEST}`
+				  )
+				: null
+		);
+	};
 
-						{item.label}
-					</ClayDropDown.Item>
-				))}
-			</ClayDropDown.Group>
-		</ClayDropDown.ItemList>
-	</ClayDropDown>
-);
+	return (
+		<ClayDropDown
+			trigger={
+				<ClayButton displayType="unstyled">
+					<ClayIcon symbol="ellipsis-v"></ClayIcon>
+				</ClayButton>
+			}
+		>
+			<ClayDropDown.ItemList>
+				<ClayDropDown.Group>
+					{options.map((item, index) => (
+						<ClayDropDown.Item
+							key={index}
+							onClick={item.key === 'edit' ? onEdit : onClick}
+						>
+							<ClayIcon symbol={item.icon}></ClayIcon>
+
+							{item.label}
+						</ClayDropDown.Item>
+					))}
+				</ClayDropDown.Group>
+			</ClayDropDown.ItemList>
+		</ClayDropDown>
+	);
+};
 
 export default DropDown;

@@ -21,6 +21,36 @@ export default function getMDFListColumns(
 	columns?: TableColumn<MDFRequestListItem>[],
 	siteURL?: string
 ): TableColumn<MDFRequestListItem>[] | undefined {
+	const handleDropdownOptions = (row: MDFRequestListItem) => {
+		const option = [
+			{
+				icon: 'view',
+				key: 'approve',
+				label: ' View',
+			},
+			{
+				icon: 'pencil',
+				key: 'edit',
+				label: 'Edit',
+			},
+		];
+
+		return (
+			<Dropdown
+				onClick={() =>
+					Liferay.Util.navigate(
+						`${siteURL}/l/${row[MDFColumnKey.ID]}`
+					)
+				}
+				options={
+					row[MDFColumnKey.STATUS] === Status.DRAFT
+						? option
+						: [option[0]]
+				}
+			></Dropdown>
+		);
+	};
+
 	return (
 		columns && [
 			{
@@ -37,22 +67,7 @@ export default function getMDFListColumns(
 			{
 				columnKey: MDFColumnKey.ACTION,
 				label: '',
-				render: (_, row) => (
-					<Dropdown
-						onClick={() =>
-							Liferay.Util.navigate(
-								`${siteURL}/l/${row[MDFColumnKey.ID]}`
-							)
-						}
-						options={[
-							{
-								icon: 'view',
-								key: 'approve',
-								label: ' View',
-							},
-						]}
-					></Dropdown>
-				),
+				render: (_, row) => handleDropdownOptions(row),
 			},
 		]
 	);
