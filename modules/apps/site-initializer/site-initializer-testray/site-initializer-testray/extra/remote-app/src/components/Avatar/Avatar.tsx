@@ -120,10 +120,8 @@ Avatar.Group = ({assignedUsers, groupSize}) => {
 				className="align-items-center avatar-plus d-flex justify-content-center p-0 pl-4 text-nowrap"
 				title={assignedUsers.map(({name}) => name).toString()}
 			>
-				+
-				{totalAssignedUsers <= groupSize
-					? `${totalAssignedUsers}`
-					: `${totalAssignedUsers - groupSize}`}
+				{totalAssignedUsers > 3 &&
+					` + ${totalAssignedUsers - groupSize}`}
 			</div>
 		</div>
 	);
