@@ -156,7 +156,8 @@ const TestFlow = () => {
 											groupSize={3}
 										/>
 									);
-								} catch {
+								}
+								catch {
 									return '';
 								}
 							},
