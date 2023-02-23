@@ -210,6 +210,7 @@ const baseFilters: Filter = {
 		},
 		type: 'select',
 	},
+	user: {label: i18n.translate('name'), name: 'name', type: 'text'},
 };
 
 const overrides = (
@@ -663,6 +664,9 @@ const filterSchema = {
 				type: 'select',
 			}),
 		] as RendererFields[],
+	},
+	user: {
+		fields: [overrides(baseFilters.user, {operator: 'contains'})],
 	},
 } as const;
 
