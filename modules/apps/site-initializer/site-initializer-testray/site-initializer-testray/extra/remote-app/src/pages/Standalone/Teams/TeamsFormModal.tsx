@@ -111,7 +111,7 @@ const TeamFormModal: React.FC<TeamProps> = ({
 }) => {
 	const [state, setState] = useState<State>([]);
 	const {
-		formState: {errors},
+		formState: {errors, isSubmitting},
 		handleSubmit,
 		register,
 	} = useForm<TeamForm>({
@@ -119,7 +119,7 @@ const TeamFormModal: React.FC<TeamProps> = ({
 		resolver: yupResolver(yupSchema.team),
 	});
 
-	const _onSubmit = (teamForm: TeamForm) => {
+	const _onSubmit = (teamForm: TeamForm) => 
 		onSubmit(
 			{id: teamForm.id, name: teamForm.name, projectId},
 			{
@@ -135,7 +135,6 @@ const TeamFormModal: React.FC<TeamProps> = ({
 			)
 			.then(onSave)
 			.catch(onError);
-	};
 
 	return (
 		<Modal
@@ -143,6 +142,8 @@ const TeamFormModal: React.FC<TeamProps> = ({
 				<Form.Footer
 					onClose={onClose}
 					onSubmit={handleSubmit(_onSubmit)}
+					primaryButtonProps={{loading: isSubmitting}}
+
 				/>
 			}
 			observer={observer}
