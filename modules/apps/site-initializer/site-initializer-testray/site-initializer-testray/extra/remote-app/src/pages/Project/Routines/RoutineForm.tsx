@@ -48,7 +48,7 @@ const RoutineForm = () => {
 	} = useOutletContext<OutletContext>();
 
 	const {
-		formState: {errors},
+		formState: {errors, isSubmitting},
 		handleSubmit,
 		register,
 		setValue,
@@ -62,7 +62,7 @@ const RoutineForm = () => {
 		form: {onClose, onError, onSave, onSubmit},
 	} = useFormActions();
 
-	const _onSubmit = (form: RoutineFormType) => {
+	const _onSubmit = (form: RoutineFormType) =>
 		onSubmit(
 			{
 				...form,
@@ -76,7 +76,6 @@ const RoutineForm = () => {
 			.then(mutateTestrayRoutine)
 			.then(onSave)
 			.catch(onError);
-	};
 
 	const autoanalyze = watch('autoanalyze');
 
@@ -96,7 +95,11 @@ const RoutineForm = () => {
 				onChange={() => setValue('autoanalyze', !autoanalyze)}
 			/>
 
-			<Form.Footer onClose={onClose} onSubmit={handleSubmit(_onSubmit)} />
+			<Form.Footer
+				onClose={onClose}
+				onSubmit={handleSubmit(_onSubmit)}
+				primaryButtonProps={{loading: isSubmitting}}
+			/>
 		</Container>
 	);
 };
