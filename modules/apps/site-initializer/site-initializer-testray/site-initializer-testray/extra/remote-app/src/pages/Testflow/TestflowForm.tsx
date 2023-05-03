@@ -108,7 +108,7 @@ const TestflowForm = () => {
 	);
 
 	const {
-		formState: {errors},
+		formState: {errors, isSubmitting},
 		handleSubmit,
 		register,
 		setValue,
@@ -301,6 +301,7 @@ const TestflowForm = () => {
 			<Form.Footer
 				onClose={() => onClose()}
 				onSubmit={handleSubmit(_onSubmit)}
+				primaryButtonProps={{loading: isSubmitting}}
 			/>
 
 			<TestflowAssignUserModal modal={modal} type={modalType} />
