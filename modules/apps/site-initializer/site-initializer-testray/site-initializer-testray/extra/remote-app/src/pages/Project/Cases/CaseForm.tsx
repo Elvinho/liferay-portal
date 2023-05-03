@@ -101,7 +101,7 @@ const CaseForm = () => {
 
 	const {projectId} = useParams();
 	const {
-		formState: {errors},
+		formState: {errors, isSubmitting},
 		handleSubmit,
 		register,
 		setValue,
@@ -124,7 +124,7 @@ const CaseForm = () => {
 	const _onSubmit = (form: CaseFormData) => {
 		const addAnother = form?.addAnother === true;
 
-		onSubmit(
+		return onSubmit(
 			{...form, projectId},
 			{
 				create: (data) => testrayCaseImpl.create(data),
@@ -274,6 +274,7 @@ const CaseForm = () => {
 				<Form.Footer
 					onClose={onClose}
 					onSubmit={handleSubmit(_onSubmit)}
+					primaryButtonProps={{loading: isSubmitting}}
 				/>
 			</ClayForm>
 		</Container>
