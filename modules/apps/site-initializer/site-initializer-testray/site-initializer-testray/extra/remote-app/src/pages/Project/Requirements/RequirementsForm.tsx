@@ -64,7 +64,7 @@ const RequirementsForm = () => {
 		testrayRequirement,
 	}: OutletContext = useOutletContext();
 	const {
-		formState: {errors},
+		formState: {errors, isSubmitting},
 		handleSubmit,
 		register,
 		setValue,
@@ -92,7 +92,7 @@ const RequirementsForm = () => {
 			form.key = `R-${Math.ceil(Math.random() * 1000)}`;
 		}
 
-		onSubmit(
+		return onSubmit(
 			{...form, projectId},
 			{
 				create: (data) => testrayRequirementsImpl.create(data),
@@ -196,6 +196,8 @@ const RequirementsForm = () => {
 				<Form.Footer
 					onClose={onClose}
 					onSubmit={handleSubmit(_onSubmit)}
+					primaryButtonProps={{loading: isSubmitting}}
+
 				/>
 			</ClayForm>
 		</Container>
