@@ -40,7 +40,7 @@ const ComponentFormModal: React.FC<ComponentProps> = ({
 	projectId,
 }) => {
 	const {
-		formState: {errors},
+		formState: {errors, isSubmitting},
 		handleSubmit,
 		register,
 		watch,
@@ -69,7 +69,7 @@ const ComponentFormModal: React.FC<ComponentProps> = ({
 	const teamId = watch('teamId');
 	const teams = teamsResponse?.items || [];
 
-	const _onSubmit = (componentForm: ComponentForm) => {
+	const _onSubmit = (componentForm: ComponentForm) => 
 		onSubmit(
 			{
 				...componentForm,
@@ -82,7 +82,6 @@ const ComponentFormModal: React.FC<ComponentProps> = ({
 		)
 			.then(onSave)
 			.catch(onError);
-	};
 
 	return (
 		<Modal
@@ -90,6 +89,7 @@ const ComponentFormModal: React.FC<ComponentProps> = ({
 				<Form.Footer
 					onClose={onClose}
 					onSubmit={handleSubmit(_onSubmit)}
+					primaryButtonProps={{loading: isSubmitting}}
 				/>
 			}
 			observer={observer}
