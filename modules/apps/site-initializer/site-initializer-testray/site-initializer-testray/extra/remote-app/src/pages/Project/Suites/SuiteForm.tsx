@@ -67,7 +67,7 @@ const SuiteForm = () => {
 	const [cases, setCases] = useState<number[]>(context.suiteCasesItems ?? []);
 
 	const {
-		formState: {errors},
+		formState: {errors, isSubmitting},
 		handleSubmit,
 		register,
 		setValue,
@@ -130,7 +130,7 @@ const SuiteForm = () => {
 
 	const caseFilter = getCaseFilter;
 
-	const _onSubmit = (form: SuiteFormData) => {
+	const _onSubmit = (form: SuiteFormData) => 
 		onSubmit<TestraySuite>(
 			{...form, projectId},
 			{
@@ -149,7 +149,6 @@ const SuiteForm = () => {
 			.then(context.mutateTestraySuite)
 			.then(onSave)
 			.catch(onError);
-	};
 
 	const {modal} = useFormModal({
 		onSave: (value) => {
@@ -268,7 +267,10 @@ const SuiteForm = () => {
 				</>
 			)}
 
-			<Form.Footer onClose={onClose} onSubmit={handleSubmit(_onSubmit)} />
+			<Form.Footer 
+				onClose={onClose} 
+				onSubmit={handleSubmit(_onSubmit)} 
+				primaryButtonProps={{loading: isSubmitting}}/>
 		</Container>
 	);
 };
