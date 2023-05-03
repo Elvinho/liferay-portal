@@ -42,7 +42,7 @@ const ProductVersionFormModal: React.FC<ProductVersionProps> = ({
 		resolver: yupResolver(yupSchema.productVersion),
 	});
 
-	const _onSubmit = (productVersionForm: ProductVersionForm) => 
+	const _onSubmit = (productVersionForm: ProductVersionForm) =>
 		onSubmit(
 			{
 				id: productVersionForm.id,
@@ -65,7 +65,6 @@ const ProductVersionFormModal: React.FC<ProductVersionProps> = ({
 					onClose={onClose}
 					onSubmit={handleSubmit(_onSubmit)}
 					primaryButtonProps={{loading: isSubmitting}}
-
 				/>
 			}
 			observer={observer}

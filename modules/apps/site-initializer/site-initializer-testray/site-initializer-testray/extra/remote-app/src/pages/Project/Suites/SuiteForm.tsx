@@ -130,7 +130,7 @@ const SuiteForm = () => {
 
 	const caseFilter = getCaseFilter;
 
-	const _onSubmit = (form: SuiteFormData) => 
+	const _onSubmit = (form: SuiteFormData) =>
 		onSubmit<TestraySuite>(
 			{...form, projectId},
 			{
@@ -267,10 +267,11 @@ const SuiteForm = () => {
 				</>
 			)}
 
-			<Form.Footer 
-				onClose={onClose} 
-				onSubmit={handleSubmit(_onSubmit)} 
-				primaryButtonProps={{loading: isSubmitting}}/>
+			<Form.Footer
+				onClose={onClose}
+				onSubmit={handleSubmit(_onSubmit)}
+				primaryButtonProps={{loading: isSubmitting}}
+			/>
 		</Container>
 	);
 };

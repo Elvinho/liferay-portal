@@ -54,11 +54,16 @@ const EnvironmentFactorsModal: React.FC<EnvironmentFactorsModalProps> = ({
 		form: {onSuccess, submitting},
 	} = useFormActions();
 
-	const {formState: {isSubmitting}, handleSubmit, register, setValue} = useForm<FactorEnviroment>({
+	const {
+		formState: {isSubmitting},
+		handleSubmit,
+		register,
+		setValue,
+	} = useForm<FactorEnviroment>({
 		resolver: yupResolver(yupSchema.enviroment),
 	});
 
-	const isLoading = isSubmitting || submitting
+	const isLoading = isSubmitting || submitting;
 
 	const [state, setState] = useState<State>([[], []]);
 	const [step, setStep] = useState(0);
@@ -184,8 +189,10 @@ const EnvironmentFactorsModal: React.FC<EnvironmentFactorsModalProps> = ({
 						onClose={() => (lastStep ? setStep(0) : onCloseModal())}
 						onSubmit={handleSubmit(_onSubmit)}
 						primaryButtonProps={{
-							disabled: submitting || !selectedEnvironmentFactors.length,
-							loading:isLoading,
+							disabled:
+								submitting ||
+								!selectedEnvironmentFactors.length,
+							loading: isLoading,
 							title: i18n.translate(lastStep ? 'save' : 'next'),
 						}}
 						secondaryButtonProps={{

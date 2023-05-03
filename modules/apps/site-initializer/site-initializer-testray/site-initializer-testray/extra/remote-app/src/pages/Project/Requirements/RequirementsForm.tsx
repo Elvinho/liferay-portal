@@ -197,7 +197,6 @@ const RequirementsForm = () => {
 					onClose={onClose}
 					onSubmit={handleSubmit(_onSubmit)}
 					primaryButtonProps={{loading: isSubmitting}}
-
 				/>
 			</ClayForm>
 		</Container>

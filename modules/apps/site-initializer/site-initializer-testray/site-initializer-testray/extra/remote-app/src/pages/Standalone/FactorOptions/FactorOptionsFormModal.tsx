@@ -67,7 +67,7 @@ const FactorOptionsFormModal: React.FC<FactorOptionsProps> = ({
 
 	const factorCategories = data?.items || [];
 
-	const _onSubmit = (form: FactorOptionsForm) => 
+	const _onSubmit = (form: FactorOptionsForm) =>
 		onSubmit(form, {
 			create: (data) => testrayFactorOptionsImpl.create(data),
 			update: (id, data) => testrayFactorOptionsImpl.update(id, data),
@@ -92,7 +92,6 @@ const FactorOptionsFormModal: React.FC<FactorOptionsProps> = ({
 					onClose={onClose}
 					onSubmit={handleSubmit(_onSubmit)}
 					primaryButtonProps={{loading: isSubmitting}}
-
 				/>
 			}
 			observer={observer}

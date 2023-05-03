@@ -51,7 +51,6 @@ const FactorCategoryFormModal: React.FC<FormModalComponent> = ({
 					onClose={onClose}
 					onSubmit={handleSubmit(_onSubmit)}
 					primaryButtonProps={{loading: isSubmitting}}
-
 				/>
 			}
 			observer={observer}

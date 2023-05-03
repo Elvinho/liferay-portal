@@ -69,7 +69,7 @@ const ComponentFormModal: React.FC<ComponentProps> = ({
 	const teamId = watch('teamId');
 	const teams = teamsResponse?.items || [];
 
-	const _onSubmit = (componentForm: ComponentForm) => 
+	const _onSubmit = (componentForm: ComponentForm) =>
 		onSubmit(
 			{
 				...componentForm,

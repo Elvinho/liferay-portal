@@ -119,7 +119,7 @@ const TeamFormModal: React.FC<TeamProps> = ({
 		resolver: yupResolver(yupSchema.team),
 	});
 
-	const _onSubmit = (teamForm: TeamForm) => 
+	const _onSubmit = (teamForm: TeamForm) =>
 		onSubmit(
 			{id: teamForm.id, name: teamForm.name, projectId},
 			{
@@ -143,7 +143,6 @@ const TeamFormModal: React.FC<TeamProps> = ({
 					onClose={onClose}
 					onSubmit={handleSubmit(_onSubmit)}
 					primaryButtonProps={{loading: isSubmitting}}
-
 				/>
 			}
 			observer={observer}

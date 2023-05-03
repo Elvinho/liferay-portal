@@ -67,7 +67,6 @@ const CaseTypeFormModal: React.FC<CaseTypeProps> = ({
 					onClose={onClose}
 					onSubmit={handleSubmit(_onSubmit)}
 					primaryButtonProps={{loading: isSubmitting}}
-
 				/>
 			}
 			observer={observer}
