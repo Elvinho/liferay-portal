@@ -1,12 +1,7 @@
 assemble:
     - fromTask: bootJar
-liferay-sample-etc-spring-boot-notification-type-1:
-    name: Liferay Sample Etc Spring Boot Notification Type 1
-    oAuth2ApplicationExternalReferenceCode: liferay-sample-etc-spring-boot-oauth-application-user-agent
-    resourcePath: /notification/type/1
-    type: notificationType
 liferay-sample-etc-spring-boot-oauth-application-user-agent:
-    .serviceAddress: localhost:58081
+    .serviceAddress: 172.17.0.1:58081
     .serviceScheme: http
     name: Liferay Sample Etc Spring Boot Spring Boot OAuth Application User Agent
     scopes:
@@ -19,4 +14,3 @@ liferay-sample-etc-spring-boot-object-action-1:
     oAuth2ApplicationExternalReferenceCode: liferay-sample-etc-spring-boot-oauth-application-user-agent
     resourcePath: /object/action/1
     type: objectAction
-     
