@@ -11,7 +11,6 @@ import java.util.HashMap;
 
 import org.json.JSONObject;
 
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -75,11 +74,4 @@ public class ObjectAction1RestController extends BaseRestController {
 
 		return new ResponseEntity<>(json, HttpStatus.OK);
 	}
-
-	@Value("${com.liferay.lxc.dxp.mainDomain}")
-	private String _lxcDXPMainDomain;
-
-	@Value("${com.liferay.lxc.dxp.server.protocol}")
-	private String _lxcDXPServerProtocol;
-
 }

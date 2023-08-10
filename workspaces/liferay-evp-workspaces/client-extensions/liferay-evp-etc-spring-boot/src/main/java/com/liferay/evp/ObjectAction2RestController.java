@@ -10,9 +10,7 @@ import com.liferay.petra.string.StringBundler;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.oauth2.jwt.Jwt;
@@ -20,7 +18,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.reactive.function.client.WebClient;
 
 /**
  * @author Elvison Victor
@@ -107,9 +104,9 @@ public class ObjectAction2RestController extends BaseRestController {
 							}
 						}
 
-						_put(
-							itemsJSONArray.toString(), "/o/c/evprequests/batch",
-							jwt);
+						put(
+							itemsJSONArray.toString(), jwt,
+							"/o/c/evprequests/batch");
 					},
 					jwt,
 					StringBundler.concat(
@@ -117,37 +114,8 @@ public class ObjectAction2RestController extends BaseRestController {
 						"r_organization_c_evpOrganizationId eq '",
 						evpOrganizationId, "'"));
 			},
-			jwt, "/o/c/evporganizations/" + String.valueOf(evpOrganizationId));
+			jwt, "/o/c/evporganizations/" + evpOrganizationId);
 
 		return new ResponseEntity<>(json, HttpStatus.OK);
 	}
-
-	private void _put(String bodyValue, String path, Jwt jwt) {
-		WebClient.create(
-			_lxcDXPServerProtocol + "://" + _lxcDXPMainDomain
-		).put(
-		).uri(
-			uriBuilder -> uriBuilder.path(
-				path
-			).build()
-		).accept(
-			MediaType.APPLICATION_JSON
-		).contentType(
-			MediaType.APPLICATION_JSON
-		).header(
-			"Authorization", "Bearer " + jwt.getTokenValue()
-		).bodyValue(
-			bodyValue
-		).retrieve(
-		).bodyToMono(
-			Void.class
-		).subscribe();
-	}
-
-	@Value("${com.liferay.lxc.dxp.mainDomain}")
-	private String _lxcDXPMainDomain;
-
-	@Value("${com.liferay.lxc.dxp.server.protocol}")
-	private String _lxcDXPServerProtocol;
-
 }
