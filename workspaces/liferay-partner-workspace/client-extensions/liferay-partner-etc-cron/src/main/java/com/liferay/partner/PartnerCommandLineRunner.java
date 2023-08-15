@@ -8,6 +8,7 @@ package com.liferay.partner;
 import com.liferay.petra.string.StringBundler;
 
 import java.time.ZonedDateTime;
+import java.time.temporal.ChronoUnit;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -20,24 +21,23 @@ import org.springframework.stereotype.Component;
  */
 @Component
 public class PartnerCommandLineRunner
-	extends PartnerBaseController implements CommandLineRunner {
+		extends BasePartnerController implements CommandLineRunner {
 
 	@Override
 	public void run(String... args) throws Exception {
 		ZonedDateTime zonedDateTime = ZonedDateTime.now();
 
 		JSONObject responseJSONObject = get(
-			uriBuilder -> uriBuilder.path(
-				"/o/c/activities"
-			).queryParam(
-				"filter",
-				"activityStatus eq 'approved' and startDate le " +
-					toString(zonedDateTime)
-			).queryParam(
-				"page", "1"
-			).queryParam(
-				"pageSize", "-1"
-			).build());
+				uriBuilder -> uriBuilder.path(
+						"/o/c/activities").queryParam(
+								"filter",
+								"activityStatus eq 'approved' and startDate le " +
+										toString(zonedDateTime))
+						.queryParam(
+								"page", "1")
+						.queryParam(
+								"pageSize", "-1")
+						.build());
 
 		if (responseJSONObject.getInt("totalCount") > 0) {
 			JSONArray itemsJSONArray = responseJSONObject.getJSONArray("items");
@@ -45,31 +45,27 @@ public class PartnerCommandLineRunner
 			for (int i = 0; i < itemsJSONArray.length(); i++) {
 				JSONObject itemJSONObject = itemsJSONArray.getJSONObject(i);
 
-				JSONObject activityStatusJSONObject =
-					itemJSONObject.getJSONObject("activityStatus");
+				JSONObject activityStatusJSONObject = itemJSONObject.getJSONObject("activityStatus");
 
 				activityStatusJSONObject.put(
-					"key", "active"
-				).put(
-					"name", "Active"
-				);
+						"key", "active").put(
+								"name", "Active");
 			}
 
 			put(itemsJSONArray.toString(), "/o/c/activities/batch");
 		}
 
 		responseJSONObject = get(
-			uriBuilder -> uriBuilder.path(
-				"/o/c/activities"
-			).queryParam(
-				"filter",
-				"activityStatus eq 'active' and endDate lt " +
-					toString(zonedDateTime.minusDays(30))
-			).queryParam(
-				"page", "1"
-			).queryParam(
-				"pageSize", "-1"
-			).build());
+				uriBuilder -> uriBuilder.path(
+						"/o/c/activities").queryParam(
+								"filter",
+								"activityStatus eq 'active' and endDate lt " +
+										toString(zonedDateTime.minusDays(30)))
+						.queryParam(
+								"page", "1")
+						.queryParam(
+								"pageSize", "-1")
+						.build());
 
 		if (responseJSONObject.getInt("totalCount") > 0) {
 			JSONArray itemsJSONArray = responseJSONObject.getJSONArray("items");
@@ -77,35 +73,31 @@ public class PartnerCommandLineRunner
 			for (int i = 0; i < itemsJSONArray.length(); i++) {
 				JSONObject itemJSONObject = itemsJSONArray.getJSONObject(i);
 
-				JSONObject activityStatusJSONObject =
-					itemJSONObject.getJSONObject("activityStatus");
+				JSONObject activityStatusJSONObject = itemJSONObject.getJSONObject("activityStatus");
 
 				activityStatusJSONObject.put(
-					"key", "expired"
-				).put(
-					"name", "Expired"
-				);
+						"key", "expired").put(
+								"name", "Expired");
 			}
 
 			put(itemsJSONArray.toString(), "/o/c/activities/batch");
 		}
 
 		responseJSONObject = get(
-			uriBuilder -> uriBuilder.path(
-				"/o/c/activities"
-			).queryParam(
-				"filter",
-				StringBundler.concat(
-					"submitted eq true and activityStatus eq 'active' and ",
-					"endDate le ", toString(zonedDateTime.minusDays(15)),
-					" and mdfReqToActs/mdfRequestStatus eq 'approved'")
-			).queryParam(
-				"nestedFields", "actToMDFClmActs"
-			).queryParam(
-				"page", "1"
-			).queryParam(
-				"pageSize", "-1"
-			).build());
+				uriBuilder -> uriBuilder.path(
+						"/o/c/activities").queryParam(
+								"filter",
+								StringBundler.concat(
+										"submitted eq true and activityStatus eq 'active' and ",
+										"endDate le ", toString(zonedDateTime.minusDays(15)),
+										" and mdfReqToActs/mdfRequestStatus eq 'approved'"))
+						.queryParam(
+								"nestedFields", "actToMDFClmActs")
+						.queryParam(
+								"page", "1")
+						.queryParam(
+								"pageSize", "-1")
+						.build());
 
 		if (responseJSONObject.getInt("totalCount") > 0) {
 			JSONArray itemsJSONArray = responseJSONObject.getJSONArray("items");
@@ -116,56 +108,49 @@ public class PartnerCommandLineRunner
 				long activityId = itemJSONObject.getLong("id");
 
 				ZonedDateTime zonedActivityEndDate = ZonedDateTime.parse(
-					itemJSONObject.getString("endDate"));
+						itemJSONObject.getString("endDate"));
 
-				ZonedDateTime zonedActivityExpirationDate =
-					zonedActivityEndDate.plusDays(30);
+				ZonedDateTime zonedActivityExpirationDate = zonedActivityEndDate.plusDays(30);
 
-				JSONArray mdfClaimActivitiesJSONArray =
-					itemJSONObject.getJSONArray("actToMDFClmActs");
+				long days = zonedActivityEndDate.until(zonedDateTime, ChronoUnit.DAYS);
+				System.out.println("days ->" + days);
+
+				JSONArray mdfClaimActivitiesJSONArray = itemJSONObject.getJSONArray("actToMDFClmActs");
 
 				if (mdfClaimActivitiesJSONArray.length() == 0) {
 					sendNotification(
-						activityId, zonedActivityExpirationDate, zonedDateTime);
-				}
-				else {
-					JSONArray claimedMdfClaimActivityJSONArray =
-						new JSONArray();
+							activityId, zonedActivityExpirationDate.toLocalDate(), zonedDateTime.toLocalDate(), days);
+				} else {
+					JSONArray claimedMdfClaimActivityJSONArray = new JSONArray();
 
-					for (int j = 0; j < mdfClaimActivitiesJSONArray.length();
-						 j++) {
+					for (int j = 0; j < mdfClaimActivitiesJSONArray.length(); j++) {
 
-						JSONObject mdfClaimActivityJSONObject =
-							mdfClaimActivitiesJSONArray.getJSONObject(j);
+						JSONObject mdfClaimActivityJSONObject = mdfClaimActivitiesJSONArray.getJSONObject(j);
 
-						Boolean selectedActivity =
-							mdfClaimActivityJSONObject.getBoolean("selected");
+						Boolean selectedActivity = mdfClaimActivityJSONObject.getBoolean("selected");
 
 						if (selectedActivity) {
-							long mdfClaimId =
-								mdfClaimActivityJSONObject.getLong(
+							long mdfClaimId = mdfClaimActivityJSONObject.getLong(
 									"r_mdfClmToMDFClmActs_c_mdfClaimId");
 
 							responseJSONObject = get(
-								uriBuilder -> uriBuilder.path(
-									"/o/c/mdfclaims/" + mdfClaimId
-								).build());
+									uriBuilder -> uriBuilder.path(
+											"/o/c/mdfclaims/" + mdfClaimId).build());
 
-							JSONObject mdfClaimStatusJSONObject =
-								responseJSONObject.getJSONObject(
+							JSONObject mdfClaimStatusJSONObject = responseJSONObject.getJSONObject(
 									"mdfClaimStatus");
 
-							String mdfClaimStatusKey =
-								mdfClaimStatusJSONObject.getString("key");
+							String mdfClaimStatusKey = mdfClaimStatusJSONObject.getString("key");
 
 							if (!mdfClaimStatusKey.equals("draft") &&
-								!mdfClaimStatusKey.equals(
-									"moreInfoRequested") &&
-								!mdfClaimStatusKey.equals("cancel") &&
-								!mdfClaimStatusKey.equals("rejected")) {
+									!mdfClaimStatusKey.equals(
+											"moreInfoRequested")
+									&&
+									!mdfClaimStatusKey.equals("cancel") &&
+									!mdfClaimStatusKey.equals("rejected")) {
 
 								claimedMdfClaimActivityJSONArray.put(
-									mdfClaimActivityJSONObject);
+										mdfClaimActivityJSONObject);
 
 								break;
 							}
@@ -174,8 +159,8 @@ public class PartnerCommandLineRunner
 
 					if (claimedMdfClaimActivityJSONArray.length() == 0) {
 						sendNotification(
-							activityId, zonedActivityExpirationDate,
-							zonedDateTime);
+								activityId, zonedActivityExpirationDate.toLocalDate(),
+								zonedDateTime.toLocalDate(), days);
 					}
 				}
 			}
