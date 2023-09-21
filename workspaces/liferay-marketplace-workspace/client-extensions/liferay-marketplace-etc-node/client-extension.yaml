@@ -16,8 +16,8 @@ liferay-marketplace-etc-node-object-action-test:
     oAuth2ApplicationExternalReferenceCode: liferay-marketplace-etc-node-oauth-application-user-agent
     resourcePath: /marketplace/test
     type: objectAction
-liferay-marketplace-etc-node-object-action-trial-add:
-    name: Liferay Marketplace Object Action Trial Add
+liferay-marketplace-etc-node-object-action-trial:
+    name: Liferay Marketplace Object Action Trial
     oAuth2ApplicationExternalReferenceCode: liferay-marketplace-etc-node-oauth-application-user-agent
     resourcePath: /marketplace/trial
     type: objectAction
