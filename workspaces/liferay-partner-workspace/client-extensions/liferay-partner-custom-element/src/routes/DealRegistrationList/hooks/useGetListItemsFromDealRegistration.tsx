@@ -13,6 +13,18 @@ import {ResourceName} from '../../../common/services/liferay/object/enum/resourc
 import useGet from '../../../common/services/liferay/object/useGet';
 import getDealDates from '../utils/getDealDates';
 
+const getStatus = (leadStatus: string) => {
+	if(leadStatus === 'Qualified'){
+		return 'Approved';
+	}else if(leadStatus === 'CAM rejected'){
+		return 'Rejected';
+	}
+	else if(leadStatus !== 'Qualified' && leadStatus !== 'CAM rejected'){
+		return 'Submitted';
+	}
+	return leadStatus;
+}
+
 export default function useGetListItemsFromDealRegistration(
 	page: number,
 	pageSize: number,
@@ -48,7 +60,7 @@ export default function useGetListItemsFromDealRegistration(
 				...getDealDates(item.dateCreated),
 
 				[DealRegistrationColumnKey.STATUS]: item.leadStatus
-					? item.leadStatus
+					? getStatus(item.leadStatus)
 					: ' - ',
 				...getDealDates(item.dateCreated),
 				[DealRegistrationColumnKey.PRIMARY_PROSPECT_NAME]: `${
