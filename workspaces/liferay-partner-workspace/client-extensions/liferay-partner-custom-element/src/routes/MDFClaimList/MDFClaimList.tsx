@@ -132,6 +132,7 @@ const MDFClaimList = () => {
 				<div className="d-flex">
 					<div>
 						<Search
+							initialSearchTerm={filters.searchTerm}
 							onSearchSubmit={(searchTerm: string) =>
 								onFilter({
 									searchTerm,
@@ -192,6 +193,7 @@ const MDFClaimList = () => {
 											});
 										}}
 										filterDescription="Claim Submitted "
+										submitDate={filters.submitDate}
 									/>
 								),
 								name: 'Date Submitted',
@@ -208,6 +210,9 @@ const MDFClaimList = () => {
 										}
 										clearCheckboxes={
 											!filters.status.value?.length
+										}
+										initialCheckedItems={
+											filters.status.value
 										}
 										updateFilters={(checkedItems) =>
 											setFilters((previousFilters) => ({
@@ -231,6 +236,9 @@ const MDFClaimList = () => {
 										clearCheckboxes={
 											!filters.partner.value?.length
 										}
+										initialCheckedItems={
+											filters.partner.value
+										}
 										updateFilters={(checkedItems) =>
 											setFilters((previousFilters) => ({
 												...previousFilters,
@@ -251,6 +259,7 @@ const MDFClaimList = () => {
 										clearCheckboxes={
 											!filters.type.value?.length
 										}
+										initialCheckedItems={filters.type.value}
 										updateFilters={(checkedItems) =>
 											setFilters((previousFilters) => ({
 												...previousFilters,

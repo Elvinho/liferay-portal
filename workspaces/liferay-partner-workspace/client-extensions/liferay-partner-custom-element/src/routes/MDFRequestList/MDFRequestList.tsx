@@ -56,6 +56,7 @@ const MDFRequestList = () => {
 		openRequestFilter,
 		isChannel
 	);
+
 	const pagination = usePagination();
 
 	const {data, isValidating, mutate} = useGet<LiferayItems<MDFRequestDTO[]>>(
@@ -151,6 +152,7 @@ const MDFRequestList = () => {
 							});
 						}}
 						filterDescription="Activity Date "
+						submitDate={filters.activityPeriod?.dates}
 					/>
 				),
 				name: 'Activity Period',
@@ -164,6 +166,7 @@ const MDFRequestList = () => {
 								: Filters.MDF_REQUEST_LISTING.completedList
 						}
 						clearCheckboxes={!filters.status.value?.length}
+						initialCheckedItems={filters.status.value}
 						updateFilters={(checkedItems) =>
 							setFilters((previousFilters) => ({
 								...previousFilters,
@@ -187,6 +190,7 @@ const MDFRequestList = () => {
 							(company) => company.label as string
 						)}
 						clearCheckboxes={!filters.partner.value?.length}
+						initialCheckedItems={filters.partner.value}
 						updateFilters={(checkedItems) =>
 							setFilters((previousFilters) => ({
 								...previousFilters,
@@ -231,6 +235,7 @@ const MDFRequestList = () => {
 				<div className="d-flex">
 					<div>
 						<Search
+							initialSearchTerm={filters.searchTerm}
 							onSearchSubmit={(searchTerm: string) =>
 								onFilter({
 									searchTerm,

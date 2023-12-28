@@ -15,7 +15,9 @@ export default function useFilters(
 	openRequestFilter: boolean,
 	isChannel?: boolean
 ) {
-	const [filters, setFilters] = useState(INITIAL_FILTER);
+	const [filters, setFilters] = useState(
+		JSON.parse(sessionStorage.getItem('filters')!) || INITIAL_FILTER
+	);
 
 	const [filtersTerm, setFilterTerm] = useState('');
 
@@ -29,6 +31,8 @@ export default function useFilters(
 
 	const onFilter = (newFilters: Partial<typeof INITIAL_FILTER>) =>
 		setFilters((previousFilters) => ({...previousFilters, ...newFilters}));
+
+	sessionStorage.setItem('filters', JSON.stringify(filters));
 
 	useEffect(() => {
 		let initialFilter = '';
